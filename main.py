@@ -30,6 +30,7 @@ def main():
     
     # Построение графиков
     plot_ratio_comparisons(dense_cases, sparse_cases, seeds)
-git
+
+
 if __name__ == "__main__":
     main()

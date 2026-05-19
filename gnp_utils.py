@@ -111,7 +111,7 @@ def plot_ratio_comparisons(dense_cases, sparse_cases, seeds):
         
         plt.title(f'Сравнение отношения стоимости алгоритма к сумме обязательных ребер, N={n} вершин', fontsize=14)
         plt.xlabel('Seed, номер графа', fontsize=12)
-        plt.ylabel('Ratio, отношение стоимости найденного пути к сумме весов обязательных ребер', fontsize=12)
+        plt.ylabel('Ratio, cost \\ cost(E_R)', fontsize=12)
         
         plt.xticks(seeds, rotation=45, ha='right', fontsize=9)
         
