@@ -13,9 +13,7 @@ def find_mst(G_R_S):
         else:
             A_S_edges.append((u, v, attrs['weight']))
 
-
     start_time_mst = time.perf_counter()
-
 
     G_required_only = nx.MultiGraph()
     G_required_only.add_weighted_edges_from(A_R_edges)
@@ -23,7 +21,8 @@ def find_mst(G_R_S):
     components = list(nx.connected_components(G_required_only))
     
     if len(components) <= 1:
-        return components, []
+        time_mst = time.perf_counter() - start_time_mst
+        return [], time_mst
 
     node_to_comp_idx = {}
     for idx, comp in enumerate(components):
@@ -54,4 +53,5 @@ def find_mst(G_R_S):
     
     time_mst = time.perf_counter() - start_time_mst
         
+    # Возвращаем ровно два значения
     return E_MST, time_mst

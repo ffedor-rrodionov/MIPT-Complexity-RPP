@@ -1,28 +1,35 @@
-from graph_utils import load_graph, get_complete_graph, simplify_graph
-from find_mst import find_mst
-from build_solution import build_rpp_solution
+from gnp_utils import run_experiments
+from gnp_utils import plot_ratio_comparisons, print_advanced_statistics
 
 
 def main():
-    filepath = 'graph_input.txt'
-
-    G = load_graph(filepath)
-    G_R_C, N_R, shortest_paths_lengths, shortest_paths_nodes = get_complete_graph(G)
+    # 37 запусков на G(n, p)
+    seeds = list(range(42, 42 + 37)) 
     
-    G_R_S = simplify_graph(G_R_C, N_R, shortest_paths_lengths)
+    dense_cases = {
+        40: {"p_edge": 0.5, "p_mandatory": 0.35, "results": {}}, 
+        50: {"p_edge": 0.5, "p_mandatory": 0.3,  "results": {}}, 
+        70: {"p_edge": 0.5, "p_mandatory": 0.25, "results": {}}
+    }
+    
+    sparse_cases = {
+        40: {"p_edge": 0.05, "p_mandatory": 0.15, "results": {}}, 
+        50: {"p_edge": 0.05, "p_mandatory": 0.15, "results": {}}, 
+        70: {"p_edge": 0.05, "p_mandatory": 0.10, "results": {}}
+    }
 
-    E_MST, mst_time = find_mst(G_R_S)
-
-    route_nodes, total_cost, build_time = build_rpp_solution(
-        G_R_S, E_MST, shortest_paths_lengths, shortest_paths_nodes
-    )
-
-    total_time = build_time + mst_time
-
-    print(f"Время работы алгоритма: {total_time}")
-    print(f"Стоимость маршрута: {total_cost}")
-    print("Последовательность обхода вершин: ")
-    print(" -> ".join(map(str, route_nodes)))
-
+    print("Генерация и решение на плотных графах")
+    run_experiments(dense_cases, seeds)
+    
+    print("Генерация и решение на разреженных графах")
+    run_experiments(sparse_cases, seeds)
+    
+    # Вывод статистик
+    print_advanced_statistics(dense_cases, "Плотные графы")
+    print_advanced_statistics(sparse_cases, "Разреженные графы")
+    
+    # Построение графиков
+    plot_ratio_comparisons(dense_cases, sparse_cases, seeds)
+git
 if __name__ == "__main__":
     main()

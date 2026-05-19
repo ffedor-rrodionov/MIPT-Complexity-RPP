@@ -1,5 +1,9 @@
 import networkx as nx
 import time
+from graph_utils import get_complete_graph, simplify_graph
+from find_mst import find_mst
+
+
 
 
 def decode_eulerian_circuit(G_euler, abstract_circuit, shortest_paths_nodes):
@@ -86,4 +90,20 @@ def build_rpp_solution(G_R_S, E_MST, shortest_paths_lengths, shortest_paths_node
     # распаковка путей
     physical_edges, route_nodes = decode_eulerian_circuit(G_euler, abstract_circuit, shortest_paths_nodes)
     
+    return route_nodes, total_cost, total_time
+
+
+def solve(G):
+    G_R_C, N_R, shortest_paths_lengths, shortest_paths_nodes = get_complete_graph(G)
+    
+    G_R_S = simplify_graph(G_R_C, N_R, shortest_paths_lengths)
+
+    E_MST, mst_time = find_mst(G_R_S)
+
+    route_nodes, total_cost, build_time = build_rpp_solution(
+        G_R_S, E_MST, shortest_paths_lengths, shortest_paths_nodes
+    )
+
+    total_time = build_time + mst_time
+        
     return route_nodes, total_cost, total_time
