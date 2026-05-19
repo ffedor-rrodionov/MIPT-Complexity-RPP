@@ -1,11 +1,8 @@
 import networkx as nx
+import time
 
-def find_components_and_mst(G_R_S):
-    """
-    Принимает упрощенный граф G_R_S, выделяет компоненты связности 
-    обязательных рёбер и строит минимальное остовное дерево,
-    используя транзитные рёбра графа.
-    """
+def find_mst(G_R_S):
+    """Выделяет КС индуцируемые A_R и строит MST на графе из КС"""
 
     A_R_edges = []
     A_S_edges = []
@@ -17,48 +14,44 @@ def find_components_and_mst(G_R_S):
             A_S_edges.append((u, v, attrs['weight']))
 
 
-    # Выделяем компоненты связности на обязательных ребрах
-    # Строим подграф только из обязательных рёбер
+    start_time_mst = time.perf_counter()
+
+
     G_required_only = nx.MultiGraph()
     G_required_only.add_weighted_edges_from(A_R_edges)
     
-    # Находим компоненты связности
     components = list(nx.connected_components(G_required_only))
     
-    # Если граф обязательных рёбер уже связен MST не требуется
     if len(components) <= 1:
         return components, []
 
-    # Построение MST на компонентах с использованием транзитных рёбер
     node_to_comp_idx = {}
     for idx, comp in enumerate(components):
         for node in comp:
             node_to_comp_idx[node] = idx
             
-    # Создаем граф где вершины компоненты связности
+    # граф для MST, где вершины - КС на обязательных ребрах 
     G_comp = nx.MultiGraph()
     G_comp.add_nodes_from(range(len(components)))
     
+    # Добавляем транзитные мосты между компонентами
     for u, v, weight in A_S_edges:
         if u in node_to_comp_idx and v in node_to_comp_idx:
             comp_u = node_to_comp_idx[u]
             comp_v = node_to_comp_idx[v]
-            
-            # Если ребро соединяет разные компоненты
             if comp_u != comp_v:
                 G_comp.add_edge(comp_u, comp_v, weight=weight, u_min=u, v_min=v)
-                    
 
     if not nx.is_connected(G_comp):
         raise ValueError("Ошибка! Исходный граф не является связным!")
                     
-    # находим минимальное остовное дерево
-    mst_comp = nx.minimum_spanning_tree(G_comp, weight='weight')
+    mst_comp = nx.minimum_spanning_tree(G_comp, weight='weight', algorithm='kruskal')
     
-    # Извлекаем физические транзитные рёбра E_MST
+    # Возвращаем транзитные рёбра E_MST
     E_MST = []
     for i, j, data in mst_comp.edges(data=True):
         E_MST.append((data['u_min'], data['v_min'], data['weight']))
     
+    time_mst = time.perf_counter() - start_time_mst
         
-    return components, E_MST
+    return E_MST, time_mst
