@@ -1,12 +1,12 @@
 from gnp_utils import run_experiments
 from gnp_utils import plot_ratio_comparisons, print_advanced_statistics
 import pandas as pd
-from brute_rpp import run_tests
-
+from tree_tests import tree_tests
 
 def main():
     # 37 запусков на G(n, p)
-    """seeds = list(range(42, 42 + 37)) 
+    START_SEED = 42
+    GNP_CNT = 37
     
     dense_cases = {
         40: {"p_edge": 0.5, "p_mandatory": 0.35, "results": {}}, 
@@ -21,31 +21,24 @@ def main():
     }
 
     print("Генерация и решение на плотных графах")
-    run_experiments(dense_cases, seeds)
+    run_experiments(dense_cases, list(range(START_SEED, START_SEED + GNP_CNT)))
     
     print("Генерация и решение на разреженных графах")
-    run_experiments(sparse_cases, seeds)
+    run_experiments(sparse_cases, list(range(START_SEED, START_SEED + GNP_CNT)))
     
     # Вывод статистик
     print_advanced_statistics(dense_cases, "Плотные графы")
     print_advanced_statistics(sparse_cases, "Разреженные графы")
     
-    # Построение графиков
-    plot_ratio_comparisons(dense_cases, sparse_cases, seeds)"""
+    # Построение графиков для G(n, p)
+    plot_ratio_comparisons(dense_cases, sparse_cases, list(range(START_SEED, START_SEED + GNP_CNT)))
 
-    # Дальше тесты с известным оптимумом, используем полный перебор
-    """ereq_samples = [1, 2, 3, 4, 5, 6]
     
-    all_results = []
-    
-    for idx, e_req in enumerate(ereq_samples, start=1):
-        df_result = run_tests(6, e_req, seed=idx)
-        all_results.append(df_result)
-
-    brute_force_results = pd.concat(all_results, axis=0)
-
-    brute_force_results.to_csv('brute_tests.csv', index=True, encoding='utf-8')"""
-    
+    # Тесты для деревьев
+    TREES_CNT = 170
+    trees_result = tree_tests(TREES_CNT, START_SEED)
+    trees_result.to_csv("trees.csv")
+    print(trees_result)
 
 
 if __name__ == "__main__":

@@ -2,8 +2,7 @@ import networkx as nx
 import random
 import numpy as np
 import matplotlib.pyplot as plt
-from graph_utils import load_graph
-from build_solution import solve
+from graph_utils import solve
 
 
 def generate_rpp_test_case(n, p_edge, p_mandatory_prob, seed=None):
@@ -37,19 +36,6 @@ def generate_rpp_test_case(n, p_edge, p_mandatory_prob, seed=None):
     total_mandatory_weight = sum(G[u][v]["weight"] for u, v in mandatory_edges)
         
     return G, total_mandatory_weight
-
-
-def save_rpp_graph_to_txt(G, filename):
-    """
-    Сохраняет граф в текстовый файл.
-    Формат строки: u v weight is_required
-    """
-    with open(filename, 'w') as f:
-        for u, v, data in G.edges(data=True):
-            weight = data.get('weight', 1.0)
-            is_required = 1 if data.get('is_required', False) else 0
-            
-            f.write(f"{u} {v} {float(weight)} {is_required}\n")
 
 
 def run_experiments(cases, seeds):
