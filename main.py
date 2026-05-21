@@ -38,28 +38,28 @@ def main():
     plot_ratio_comparisons(dense_cases, sparse_cases, list(range(START_SEED, START_SEED + GNP_CNT)))
     
     # Тесты для деревьев
-    TREES_CNT = 500
+    TREES_CNT = 350
     trees_result = tree_tests(TREES_CNT, START_SEED)
     trees_result.to_csv("trees.csv")
     print(trees_result)
 
 
     # Тесты для разреженных графов, близких к деревьям
-    CYCLIC_CNT = 500
+    CYCLIC_CNT = 350
     cyclic_result = cyclic_tests(CYCLIC_CNT, START_SEED)
     cyclic_result.to_csv("cyclic.csv")
     print(cyclic_result[cyclic_result['ratio'] > 1.0])
 
 
     # Тесты для двух полных графов, соединённых ребром-перемычкой
-    DOUBLE_COMPLETE_CNT = 500
+    DOUBLE_COMPLETE_CNT = 350
     double_complete_result = double_complete_tests(DOUBLE_COMPLETE_CNT, START_SEED)
     double_complete_result.to_csv("double_complete.csv")
     print(double_complete_result[double_complete_result['ratio'] > 1.0])
     
 
     # Тесты для полных графов
-    COMPLETE_CNT = 500
+    COMPLETE_CNT = 350
     complete_result = complete_tests(COMPLETE_CNT, START_SEED)
     complete_result.to_csv("complete.csv")
     print(complete_result[complete_result['ratio'] > 1.0])
