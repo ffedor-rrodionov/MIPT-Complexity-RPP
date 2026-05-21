@@ -9,10 +9,8 @@ def generate_tree(n: int, max_required: int, seed: int):
     if seed is not None:
         random.seed(seed)
     
-    if n == 1:
-        return nx.empty_graph(1)
-    if n == 2:
-        return nx.path_graph(2)
+    if n < 3:
+        raise ValueError("Нет смысла рассматривать деревья на менее чем 3 вершинах!")
     
     prufer_sequence = [random.randint(0, n - 1) for _ in range(n - 2)]
     tree = nx.from_prufer_sequence(prufer_sequence)
@@ -38,7 +36,7 @@ def generate_trees(tree_cnt: int, start_seed: int):
     seeds = list(range(start_seed, start_seed + tree_cnt))
     result = []
     for seed in seeds:
-        num_v = random.randint(2, 17)
+        num_v = random.randint(3, 17)
         result.append(generate_tree(num_v, 7, seed))
     
     return result
