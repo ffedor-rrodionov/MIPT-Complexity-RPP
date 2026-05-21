@@ -1,4 +1,4 @@
-from graph_utils import get_graph_info
+from code.graph_utils import get_graph_info
 import pandas as pd
 import random
 import networkx as nx

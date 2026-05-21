@@ -1,6 +1,6 @@
 import networkx as nx
 import time
-from brute_utils import solve_rpp_brute_force
+from code.brute_utils import solve_rpp_brute_force
 
 
 def load_graph(filepath):

@@ -1,7 +1,7 @@
 import random
 import networkx as nx
 import pandas as pd
-from graph_utils import get_graph_info
+from code.graph_utils import get_graph_info
 
 
 def generate_complete_graph(seed: int) -> nx.Graph:

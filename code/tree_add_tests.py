@@ -1,8 +1,8 @@
 import random
 import itertools
 import pandas as pd
-from graph_utils import get_graph_info
-from tree_tests import generate_trees
+from code.graph_utils import get_graph_info
+from code.tree_tests import generate_trees
 
 
 def generate_cyclic(n, start_seed):

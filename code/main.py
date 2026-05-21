@@ -1,10 +1,10 @@
-from gnp_utils import run_experiments
-from gnp_utils import plot_ratio_comparisons, print_advanced_statistics
+from code.gnp_utils import run_experiments
+from code.gnp_utils import plot_ratio_comparisons, print_advanced_statistics
 import pandas as pd
-from tree_tests import tree_tests
-from tree_add_tests import cyclic_tests
-from cluster_tests import double_complete_tests
-from complete_tests import complete_tests
+from code.tree_tests import tree_tests
+from code.tree_add_tests import cyclic_tests
+from code.cluster_tests import double_complete_tests
+from code.complete_tests import complete_tests
 
 
 def main():

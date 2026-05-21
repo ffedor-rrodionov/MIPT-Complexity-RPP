@@ -2,7 +2,7 @@ import networkx as nx
 import random
 import numpy as np
 import matplotlib.pyplot as plt
-from graph_utils import solve
+from code.graph_utils import solve
 
 
 def generate_rpp_test_case(n, p_edge, p_mandatory_prob, seed=None):
