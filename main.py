@@ -9,7 +9,7 @@ from complete_tests import complete_tests
 def main():
     # 37 запусков на G(n, p)
     START_SEED = 67
-    """
+    
     GNP_CNT = 37
     dense_cases = {
         40: {"p_edge": 0.5, "p_mandatory": 0.35, "results": {}}, 
@@ -35,7 +35,6 @@ def main():
     
     # Построение графиков для G(n, p)
     plot_ratio_comparisons(dense_cases, sparse_cases, list(range(START_SEED, START_SEED + GNP_CNT)))
-    """
     
     # Тесты для деревьев
     TREES_CNT = 350
